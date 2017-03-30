@@ -2,11 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseInformation : BaseStar
+[System.Serializable]
+public class BaseInformation
 {
-	public string index;
+	private string _index;
+
+	public string index{ get { return _index; } set { _index = value; } }
+
 	public string name;
 	public string description;
+
+	public int level;
 
 	public void DoSomething ()
 	{
