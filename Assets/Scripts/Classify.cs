@@ -32,6 +32,13 @@ public enum EquipmentType
 	Jewelry = 7
 }
 
+public enum LineInFormtaion
+{
+	None = 0,
+	Front = 1,
+	Back = 2
+}
+
 public enum ClassifyItem
 {
 	common = 0,

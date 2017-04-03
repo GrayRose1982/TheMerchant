@@ -16,6 +16,26 @@ public class CharacterHero : BaseCharacter
 	
 	}
 
+	public CharacterHero (BaseCharacter b)
+	{
+		name = b.name;
+		str = b.str;
+		agi = b.agi;
+		intel = b.intel;
+		atk = b.atk;
+		matk = b.matk;
+		def = b.def;
+		mdef = b.mdef;
+		acc = b.acc;
+		eva = b.eva;
+		speed = b.speed;
+
+		line = b.line;
+		baseTeam = b.baseTeam;
+		posisionInTeam = b.posisionInTeam;
+	}
+
+
 	public void AddExp (int expAdd)
 	{
 		_experience += expAdd;

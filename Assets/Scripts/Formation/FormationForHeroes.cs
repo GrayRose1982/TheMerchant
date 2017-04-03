@@ -25,4 +25,11 @@ public class FormationForHeroes
 		
 		return current;
 	}
+
+	public void AddCharacter (BaseCharacter c, int position, LineInFormtaion line)
+	{
+		c.line = line;
+		CharacterHero h = new CharacterHero (c);
+		_heroes [position] = h;// c as CharacterHero;
+	}
 }
