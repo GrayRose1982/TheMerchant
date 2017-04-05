@@ -2,10 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseItem : BaseStar
+public class BaseItem : BaseInformation
 {
-	[SerializeField]protected int gold;
-	[SerializeField]protected int goldDiffer;
-	[SerializeField]protected ItemType type;
-	[SerializeField]protected ClassifyItem classify;
+	[SerializeField]protected int _gold;
+	[SerializeField]protected int _goldDiffer;
+	[SerializeField]protected ItemType _type;
+	[SerializeField]protected ClassifyItem _classify;
+
+	public int gold{ get { return _gold; } set { _gold = value; } }
+
+	public int goldDiffer{ get { return _goldDiffer; } set { _goldDiffer = value; } }
+
+	public ItemType type{ get { return _type; } set { _type = value; } }
+
+	public ClassifyItem classify{ get { return _classify; } set { _classify = value; } }
 }
