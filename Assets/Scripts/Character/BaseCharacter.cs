@@ -6,6 +6,7 @@ using UnityEngine;
 public class BaseCharacter : BaseStar
 {
 	[SerializeField] protected int _health;
+	public Sprite avatar;
 
 	protected float _speedPerMove;
 

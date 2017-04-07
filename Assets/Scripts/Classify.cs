@@ -23,13 +23,12 @@ public enum ItemType
 public enum EquipmentType
 {
 	None = 0,
-	Sword = 1,
-	Staff = 2,
-	Armor = 3,
-	Head = 4,
-	Gloves = 5,
-	Boots = 6,
-	Jewelry = 7
+	Weapon = 1,
+	Armor = 2,
+	Head = 3,
+	Gloves = 4,
+	Boots = 5,
+	Jewelry = 6
 }
 
 public enum LineInFormtaion

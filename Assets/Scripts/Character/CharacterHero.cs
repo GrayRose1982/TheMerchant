@@ -9,13 +9,25 @@ public class CharacterHero : BaseCharacter
 	[SerializeField]protected int _experience;
 	[SerializeField]protected int _experienceLevelUp;
 
-	[SerializeField]protected HeroType _heroTyoe;
+	[SerializeField]protected HeroType _heroType;
 
 	[SerializeField]private Equipment[] equipments;
+
+	private int apPoint;
+
+	public int experience{ get { return _experience; } }
+
+	public int maxLevel{ get { return _maxLevel; } }
+
+	public int experienceLevelUp{ get { return _experienceLevelUp; } }
+
+	public HeroType heroType{ get { return _heroType; } }
 
 	public CharacterHero ()
 	{
 		equipments = new Equipment[7];
+		speed = 100;
+		_experienceLevelUp = 2;
 	}
 
 	public CharacterHero (BaseCharacter b)
@@ -26,17 +38,42 @@ public class CharacterHero : BaseCharacter
 		intel = b.intel;
 		atk = b.atk;
 		matk = b.matk;
-		def = b.def;
+		def = b.def;				
 		mdef = b.mdef;
 		acc = b.acc;
 		eva = b.eva;
 		speed = b.speed;
 
 		equipments = new Equipment[7];
-
+		avatar = b.avatar;
 		line = b.line;
 		baseTeam = b.baseTeam;
 		posisionInTeam = b.posisionInTeam;
+	}
+
+	public CharacterHero (CharacterHero h)
+	{
+		name = h.name;
+		str = h.str;
+		agi = h.agi;
+		intel = h.intel;
+		atk = h.atk;
+		matk = h.matk;
+		def = h.def;
+		mdef = h.mdef;
+		acc = h.acc;
+		eva = h.eva;
+		speed = h.speed;
+
+		_maxLevel = h.maxLevel;
+		_experience = h.experience;
+		_experienceLevelUp = h.experienceLevelUp;
+		_heroType = h.heroType;
+		equipments = new Equipment[7];
+		avatar = h.avatar;
+		line = h.line;
+		baseTeam = h.baseTeam;
+		posisionInTeam = h.posisionInTeam;
 	}
 
 	public void AddExp (int expAdd)
@@ -54,7 +91,7 @@ public class CharacterHero : BaseCharacter
 		level++;		
 	}
 
-	private void SetItem (Equipment newEquipment)
+	public void SetItem (Equipment newEquipment)
 	{
 		int slot = (int)newEquipment.equipmentType;
 		if (ChangeItem (equipments [slot], newEquipment))
