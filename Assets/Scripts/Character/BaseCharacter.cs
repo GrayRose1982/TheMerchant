@@ -6,6 +6,9 @@ using UnityEngine;
 public class BaseCharacter : BaseStar
 {
 	[SerializeField] protected int _health;
+	public Sprite avatar;
+
+	public int manaShield;
 
 	protected float _speedPerMove;
 
@@ -20,6 +23,10 @@ public class BaseCharacter : BaseStar
 			_speedPerMove = 1000f / value;
 		}
 	}
+
+	public List<Skill> skills;
+
+    public List<Skill> skillUses;
 
 	public LineInFormtaion line;
 	public int baseTeam = 0;

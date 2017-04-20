@@ -7,6 +7,7 @@ public class LoadMaterials : MonoBehaviour
 {
 	public static LoadMaterials data;
 
+	[SerializeField]private string _linkToMaterialSprite = "";
 	public List<RawMaterialItem> baseRawMaterial;
 
 	public bool isLoadDone;
@@ -34,7 +35,7 @@ public class LoadMaterials : MonoBehaviour
 
 		doc.LoadXml (xml.text);
 
-		LoadListRawMaterial (doc.SelectNodes ("RawMaterials/RawMaterial"));
+		LoadListRawMaterial (doc.SelectNodes ("dataroot/RawMaterials"));
 	}
 
 
@@ -51,9 +52,10 @@ public class LoadMaterials : MonoBehaviour
 	private RawMaterialItem GetInfor (XmlNode info)
 	{
 		RawMaterialItem rawItem = new RawMaterialItem ();
-
-		rawItem.index = info.SelectSingleNode ("Index").InnerText;
+		rawItem.index = Ultility.RawMaterial + baseRawMaterial.Count.ToString ();
+//		rawItem.index = info.SelectSingleNode ("Index").InnerText;
 		rawItem.name = info.SelectSingleNode ("Name").InnerText;
+		rawItem.icon = Resources.Load<Sprite> (_linkToMaterialSprite + "/" + rawItem.name);
 		rawItem.level = int.Parse (info.SelectSingleNode ("Level").InnerText);
 		rawItem.gold = int.Parse (info.SelectSingleNode ("Gold").InnerText);
 		rawItem.goldDiffer = int.Parse (info.SelectSingleNode ("GoldDiffer").InnerText);
@@ -69,5 +71,10 @@ public class LoadMaterials : MonoBehaviour
 			r = new RawMaterialItem (baseRawMaterial [index]);
 
 		return r;
+	}
+
+	public RawMaterialItem GetRawMaterials (string index)
+	{
+		return baseRawMaterial.Find (x => x.index.CompareTo (index) == 0);
 	}
 }

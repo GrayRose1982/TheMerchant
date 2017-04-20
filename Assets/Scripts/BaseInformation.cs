@@ -13,9 +13,5 @@ public class BaseInformation
 	public string description;
 
 	public int level;
-	public Sprite sprite;
-
-	public void DoSomething ()
-	{
-	}
+	public Sprite icon;
 }

@@ -18,7 +18,7 @@ public class Equipment : BaseItem
 	[SerializeField]private int _magicDefenceIncrease;
 	[SerializeField]private int _speedIncrease;
 
-	public EquipmentType equipmentType { get { return _equipmentType; } }
+	public EquipmentType equipmentType { get { return _equipmentType; } set { _equipmentType = value; } }
 
 	public int strIncrease{ get { return _strIncrease; } set { _strIncrease = value; } }
 
@@ -50,7 +50,7 @@ public class Equipment : BaseItem
 		name = e.name;
 		description = e.description;
 		level = e.level;
-		sprite = e.sprite;
+		icon = e.icon;
 
 		gold = e.gold;
 		goldDiffer = e.goldDiffer;

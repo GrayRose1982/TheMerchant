@@ -20,7 +20,7 @@ public class C : MonoBehaviour
 
     IEnumerator SetUpTeam()
     {
-        while (!LoadCharacter.data.isLoadDone)
+        while (!LoadCharacter.data.isLoadMonsterDone)
             yield return new WaitForSeconds(.5f);
         int i;
         for (i = 0; i < 3; i++)

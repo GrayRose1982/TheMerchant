@@ -17,12 +17,27 @@ public class RawMaterialItem : BaseItem
 		name = raw.name;
 		description = raw.description;
 		level = raw.level;
-		sprite = raw.sprite;
+		icon = raw.icon;
 
 		gold = raw.gold;
 		goldDiffer = raw.goldDiffer;
 		type = ItemType.RawMaterial;
 		classify = raw.classify;
 		number = raw.number;
+	}
+
+	public RawMaterialItem (RawMaterialItem raw, int number)
+	{
+		index = raw.index;
+		name = raw.name;
+		description = raw.description;
+		level = raw.level;
+		icon = raw.icon;
+
+		gold = raw.gold;
+		goldDiffer = raw.goldDiffer;
+		type = ItemType.RawMaterial;
+		classify = raw.classify;
+		this.number = number;
 	}
 }
