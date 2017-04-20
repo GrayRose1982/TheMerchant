@@ -8,6 +8,8 @@ public class BaseCharacter : BaseStar
 	[SerializeField] protected int _health;
 	public Sprite avatar;
 
+	public int manaShield;
+
 	protected float _speedPerMove;
 
 	public int health{ get { return _health; } set { _health = value; } }
@@ -21,6 +23,10 @@ public class BaseCharacter : BaseStar
 			_speedPerMove = 1000f / value;
 		}
 	}
+
+	public List<Skill> skills;
+
+    public List<Skill> skillUses;
 
 	public LineInFormtaion line;
 	public int baseTeam = 0;

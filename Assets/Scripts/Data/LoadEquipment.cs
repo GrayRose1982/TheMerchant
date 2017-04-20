@@ -53,7 +53,7 @@ public class LoadEquipment : MonoBehaviour
 	private Equipment GetInfor (XmlNode info)
 	{
 		Equipment equipment = new Equipment ();
-		equipment.index = "E" + equipments.Count.ToString ();
+		equipment.index = Ultility.Equipment + equipments.Count.ToString ();
 		equipment.name = info.SelectSingleNode ("Name").InnerText;
 		equipment.level = int.Parse (info.SelectSingleNode ("Level").InnerText);
 		equipment.gold = int.Parse (info.SelectSingleNode ("Gold").InnerText);
@@ -75,12 +75,17 @@ public class LoadEquipment : MonoBehaviour
 		return equipment;
 	}
 
-	public Equipment GetRawMaterials (int index)
+	public Equipment GetEquipment (int index)
 	{
 		Equipment r = new Equipment ();
 		if (index < equipments.Count)
 			r = new Equipment (equipments [index]);
 
 		return r;
+	}
+
+	public Equipment GetEquipment (string index)
+	{
+		return equipments.Find (x => x.index.CompareTo (index) == 0);
 	}
 }

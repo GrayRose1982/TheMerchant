@@ -52,7 +52,7 @@ public class LoadMaterials : MonoBehaviour
 	private RawMaterialItem GetInfor (XmlNode info)
 	{
 		RawMaterialItem rawItem = new RawMaterialItem ();
-		rawItem.index = "RM" + baseRawMaterial.Count.ToString ();
+		rawItem.index = Ultility.RawMaterial + baseRawMaterial.Count.ToString ();
 //		rawItem.index = info.SelectSingleNode ("Index").InnerText;
 		rawItem.name = info.SelectSingleNode ("Name").InnerText;
 		rawItem.icon = Resources.Load<Sprite> (_linkToMaterialSprite + "/" + rawItem.name);
@@ -71,5 +71,10 @@ public class LoadMaterials : MonoBehaviour
 			r = new RawMaterialItem (baseRawMaterial [index]);
 
 		return r;
+	}
+
+	public RawMaterialItem GetRawMaterials (string index)
+	{
+		return baseRawMaterial.Find (x => x.index.CompareTo (index) == 0);
 	}
 }

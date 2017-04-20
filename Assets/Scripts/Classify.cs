@@ -46,3 +46,26 @@ public enum ClassifyItem
 	epic = 3,
 	legend = 4
 }
+
+public enum SkillType
+{
+	Active,
+	Passive
+}
+
+public enum SkillPassive
+{
+	
+}
+
+public enum SkillEffect
+{
+	None,
+	BuffAttack = 1,
+	BuffMagicAttack = 2,
+	BuffDefence = 3,
+	BuffMagicDefence = 4,
+	DealTrueDamage = 97,
+	DealPhysicDamage = 98,
+	DealMagicDamage = 99,
+}

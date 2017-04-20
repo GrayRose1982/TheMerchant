@@ -27,4 +27,6 @@ public class TarvenController : MonoBehaviour
 		heroes.Add (new CharacterHero (LoadCharacter.data.heroes [1]));
 
 	}
+
+
 }
