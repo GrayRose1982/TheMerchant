@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IngredientCV : MonoBehaviour
+public class MainItemFocusToCraft : MonoBehaviour
 {
-	public IngredientItem craftItem;
-	public IngredientItem[] IngredientItems;
+	public ItemSlotInCraft itemWantCraft;
+	public ItemSlotInCraft[] IngredientItems;
 
 	private string _item;
 
 	public string item {
 		set {
 			_item = value; 
-			craftItem.itemString = _item;
+			itemWantCraft.itemString = _item;
 			ChangeItemIngredient ();
 		}
 		get { return _item; }
@@ -31,10 +31,5 @@ public class IngredientCV : MonoBehaviour
 		IngredientItems [1].number = f.numIngre2;
 		IngredientItems [2].number = f.numIngre3;
 		IngredientItems [3].number = f.numIngre4;
-	}
-
-	public void btn_MakeItem ()
-	{
-		CraftShopController.controller.GetCraftItem (_item);
 	}
 }

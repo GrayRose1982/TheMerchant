@@ -53,6 +53,7 @@ public class LoadMaterials : MonoBehaviour
 	{
 		RawMaterialItem rawItem = new RawMaterialItem ();
 		rawItem.index = Ultility.RawMaterial + baseRawMaterial.Count.ToString ();
+		rawItem.index = Ultility.RawMaterial + info.SelectSingleNode ("ID").InnerText;
 //		rawItem.index = info.SelectSingleNode ("Index").InnerText;
 		rawItem.name = info.SelectSingleNode ("Name").InnerText;
 		rawItem.icon = Resources.Load<Sprite> (_linkToMaterialSprite + "/" + rawItem.name);

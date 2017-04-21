@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class IngredientItem : MonoBehaviour
+public class ItemSlotInCraft : MonoBehaviour
 {
 	[SerializeField]private string _itemString;
 	[SerializeField]private int _number;
-	[SerializeField]private Text name;
-	[SerializeField]private Text description;
+	[SerializeField]private Text txtName;
+	[SerializeField]private Text txtDescription;
 	[SerializeField]private Text txtNumber;
 
 	public Image icon;
@@ -29,7 +29,8 @@ public class IngredientItem : MonoBehaviour
 	public int number {
 		set {
 			_number = value;
-			txtNumber.text = "x" + _number.ToString ();
+			if (txtNumber)
+				txtNumber.text = "x" + _number.ToString ();
 		}
 	}
 
@@ -39,34 +40,38 @@ public class IngredientItem : MonoBehaviour
 			RawMaterialItem r = LoadMaterials.data.GetRawMaterials (_itemString);
 			if (r == null)
 				return;
-			
+
 			icon.sprite = r.icon;
-			name.text = r.name;
-			description.text = r.description;
+			SetText (txtName, r.name);
+			SetText (txtDescription, r.description);
 		} else if (_itemString.StartsWith (Ultility.Consumption)) {
 			ConsumptionItem c = LoadConsumptions.data.GetConsumption (_itemString);
 			if (c == null)
 				return;
 			icon.sprite = c.icon;
-			name.text = c.name;
-			description.text = c.description;
+			SetText (txtName, c.name);
+			SetText (txtDescription, c.description);
 		} else if (_itemString.StartsWith (Ultility.Equipment)) {
 			Equipment e = LoadEquipment.data.GetEquipment (_itemString);
 			if (e == null)
 				return;
 			icon.sprite = e.icon;
-			name.text = e.name;
-			description.text = e.description;
+			SetText (txtName, e.name);
+			SetText (txtDescription, e.description);
 		}
 	}
 
-	public void btn_ShowIngredient ()
+	/// <summary>
+	/// Set string to text field
+	/// </summary>
+	void SetText (Text text, string str)
 	{
-		CraftShopController.controller.TurnOnIngredientCV ();
+		if (text)
+			text.text = str;
 	}
 
-	public void btn_SendItemCraft ()
+	public void btn_ShowItemIngredient ()
 	{
-		CraftShopController.controller.ingreCV.item = _itemString;
+		CraftShopControllNew.craftShop.ShowItemIngredient (_itemString);
 	}
 }

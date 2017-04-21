@@ -1,7 +1,7 @@
 <dataroot>
 <RawMaterials>
 <ID>1</ID>
-<Name>Raw steel 10%</Name>
+<Name>Bronze</Name>
 <Level>1</Level>
 <Gold>5</Gold>
 <GoldDiffer>1</GoldDiffer>
@@ -9,7 +9,7 @@
 </RawMaterials>
 <RawMaterials>
 <ID>2</ID>
-<Name>Raw steel 50%</Name>
+<Name>Iron</Name>
 <Level>15</Level>
 <Gold>50</Gold>
 <GoldDiffer>10</GoldDiffer>
@@ -17,7 +17,7 @@
 </RawMaterials>
 <RawMaterials>
 <ID>3</ID>
-<Name>Raw steel 90%</Name>
+<Name>Silver</Name>
 <Level>25</Level>
 <Gold>500</Gold>
 <GoldDiffer>100</GoldDiffer>
@@ -25,39 +25,7 @@
 </RawMaterials>
 <RawMaterials>
 <ID>4</ID>
-<Name>Steel</Name>
-<Level>35</Level>
-<Gold>5000</Gold>
-<GoldDiffer>1000</GoldDiffer>
-<Classify>3</Classify>
-</RawMaterials>
-<RawMaterials>
-<ID>5</ID>
-<Name>Raw copper 10%</Name>
-<Level>1</Level>
-<Gold>5</Gold>
-<GoldDiffer>1</GoldDiffer>
-<Classify>0</Classify>
-</RawMaterials>
-<RawMaterials>
-<ID>6</ID>
-<Name>Raw copper 50%</Name>
-<Level>15</Level>
-<Gold>50</Gold>
-<GoldDiffer>10</GoldDiffer>
-<Classify>1</Classify>
-</RawMaterials>
-<RawMaterials>
-<ID>7</ID>
-<Name>Raw copper 90%</Name>
-<Level>25</Level>
-<Gold>500</Gold>
-<GoldDiffer>100</GoldDiffer>
-<Classify>2</Classify>
-</RawMaterials>
-<RawMaterials>
-<ID>8</ID>
-<Name>Copper</Name>
+<Name>Gold</Name>
 <Level>35</Level>
 <Gold>5000</Gold>
 <GoldDiffer>1000</GoldDiffer>
@@ -65,7 +33,7 @@
 </RawMaterials>
 <RawMaterials>
 <ID>9</ID>
-<Name>Diamon</Name>
+<Name>Ruby</Name>
 <Level>1</Level>
 <Gold>500</Gold>
 <GoldDiffer>0</GoldDiffer>
@@ -73,7 +41,7 @@
 </RawMaterials>
 <RawMaterials>
 <ID>10</ID>
-<Name>Ruby</Name>
+<Name>Saphear</Name>
 <Level>1</Level>
 <Gold>500</Gold>
 <GoldDiffer>0</GoldDiffer>

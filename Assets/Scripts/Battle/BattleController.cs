@@ -9,11 +9,19 @@ public class BattleController : MonoBehaviour
 	[SerializeField]
 	string _battleComment;
 
+	private BaseCharacter defenceCharacter;
+	private BaseCharacter attackCharacter;
+
+	private FormationForHeroes hf;
+	private FormationForMonsters mf;
+
 	public string battleComment { get { return _battleComment; } }
 
 	void Start ()
 	{
 		c = this;
+
+		StartCoroutine (DemoBattle ());
 	}
 
 	/// <summary>
@@ -23,6 +31,23 @@ public class BattleController : MonoBehaviour
 	{
 		Battle (one, two);
 		Debug.Log (battleComment);
+	}
+
+	IEnumerator DemoBattle ()
+	{
+		while (hf == null) {
+			if (TarvenController.tarven)
+				hf = TarvenController.tarven.formations [0];
+			yield return new WaitForSeconds (1f);
+		}
+
+		while (mf == null) {
+			if (DungeonController.dungeon)
+				mf = DungeonController.dungeon.formations [0];
+			yield return new WaitForSeconds (1f);
+		}
+
+		StartCoroutine (BattleBetweenMonsteresAndHeroes (hf, mf));
 	}
 
 	#region Battle with in formation
@@ -38,14 +63,14 @@ public class BattleController : MonoBehaviour
 		List<BaseCharacter> monsters = new List<BaseCharacter> ();
 
 		foreach (CharacterHero h in heroFormation.heroes)
-			if (h.name.CompareTo ("") != 0) {
+			if (h.name.CompareTo ("") != 0 && h != null) {
 				h.baseTeam = 0;
 				characters.Add (h);
 				heroes.Add (h);
 			}
 
 		foreach (CharacterMonster m in monsterFormation.monsters)
-			if (m.name.CompareTo ("") != 0) {
+			if (m.name.CompareTo ("") != 0 && m != null) {
 				m.baseTeam = 1;
 				characters.Add (m);
 				monsters.Add (m);
@@ -60,27 +85,96 @@ public class BattleController : MonoBehaviour
 
 		while (heroes.Count != 0 && monsters.Count != 0) {
 			Debug.Log ("Hero count:" + heroes.Count + " Monster count:" + monsters.Count);
-		
+
 			int nextPlayer = GetNextCharacterMove (listTime);
 
 			SubTimeCount (listTime, nextPlayer, characters [nextPlayer].speedPerMove);
-			BaseCharacter characterAttack = characters [nextPlayer];
-			BaseCharacter characterDefence;
+			//BaseCharacter characterAttack = characters[nextPlayer];
+//			BaseCharacter characterDefence;
+			while (defenceCharacter == null)
+				yield return new WaitForSeconds (.1f);
 
-			if (heroes.IndexOf (characterAttack) != -1)
-				characterDefence = monsters [GetLowestHeathCharacter (monsters)];
+			attackCharacter = characters [nextPlayer];
+
+			if (heroes.IndexOf (attackCharacter) != -1)
+				defenceCharacter = monsters [GetLowestHeathCharacter (monsters)];
 			else
-				characterDefence = heroes [GetLowestHeathCharacter (heroes)];
+				defenceCharacter = heroes [GetLowestHeathCharacter (heroes)];
 
-			DealPhysicDamage (characterAttack, characterDefence);
+			yield return defenceCharacter;
+			Debug.Log ("Get defence:" + defenceCharacter.name);
 
-			if (characterDefence.health <= 0)
-			if (heroes.Contains (characterDefence))
-				heroes.Remove (characterDefence);
+			DealPhysicDamage (attackCharacter, defenceCharacter);
+
+			if (defenceCharacter.health <= 0)
+			if (heroes.Contains (defenceCharacter))
+				heroes.Remove (defenceCharacter);
 			else
-				monsters.Remove (characterDefence);
+				monsters.Remove (defenceCharacter);
+			defenceCharacter = null;
+			attackCharacter = null;
+		}
+	}
 
-			yield return new WaitForSeconds (1f);
+	public IEnumerator BattleBetweenMonsteresAndHeroes (FormationForHeroes heroFormation, FormationForMonsters monsterFormation)
+	{
+		#region init list for fight
+		List<BaseCharacter> characters = new List<BaseCharacter> ();
+
+		List<BaseCharacter> heroes = new List<BaseCharacter> ();
+		List<BaseCharacter> monsters = new List<BaseCharacter> ();
+
+		foreach (CharacterHero h in heroFormation.heroes)
+			if (h != null)
+			if (h.avatar != null) {
+				Debug.Log ("New hero add to queue:" + h.name);
+				h.baseTeam = 0;
+				characters.Add (h);
+				heroes.Add (h);
+			}
+
+		foreach (CharacterMonster m in monsterFormation.monsters)
+			if (m != null && m.name.CompareTo ("") != 0) {
+				Debug.Log ("New mosnter add to queue:" + m.name);
+				m.baseTeam = 1;
+				characters.Add (m);
+				monsters.Add (m);
+			}
+
+
+		List<float> listTime = new List<float> ();
+
+		for (int i = 0; i < characters.Count; i++)
+			listTime.Add (characters [i].speedPerMove);
+		#endregion
+
+		while (heroes.Count != 0 && monsters.Count != 0) {
+			Debug.Log ("Hero count:" + heroes.Count + " Monster count:" + monsters.Count + " Total:" + characters.Count);
+
+			int nextPlayer = GetNextCharacterMove (listTime);
+			Debug.Log ("Character select: " + nextPlayer);
+			SubTimeCount (listTime, nextPlayer, characters [nextPlayer].speedPerMove);
+//			BaseCharacter characterAttack = characters [nextPlayer];
+//			BaseCharacter characterDefence;
+			attackCharacter = characters [nextPlayer];
+			if (heroes.IndexOf (attackCharacter) != -1)
+				;
+			else
+				defenceCharacter = heroes [GetLowestHeathCharacter (heroes)];
+
+			while (defenceCharacter == null)
+				yield return new WaitForSeconds (.1f);
+			Debug.Log ("Attacker:" + attackCharacter.name + " Get defence:" + defenceCharacter.name);
+
+			DealPhysicDamage (attackCharacter, defenceCharacter);
+
+			if (defenceCharacter.health <= 0)
+			if (heroes.Contains (defenceCharacter))
+				heroes.Remove (defenceCharacter);
+			else
+				monsters.Remove (defenceCharacter);
+			attackCharacter = null;
+			defenceCharacter = null;
 		}
 	}
 
@@ -202,10 +296,15 @@ public class BattleController : MonoBehaviour
 
 	void SubTimeCount (List<float> listSpeed, int positionReset, float valueGo)
 	{
-		for (int i = 0; i < listSpeed.Count; i++)
+		for (int i = 0; i < listSpeed.Count; i++) {
 			listSpeed [i] -= listSpeed [positionReset];
-		
+		}
 		listSpeed [positionReset] = valueGo;
+	}
+
+	public void SelectDefenceCharacter (BaseCharacter c)
+	{
+		defenceCharacter = c;
 	}
 
 	#endregion
