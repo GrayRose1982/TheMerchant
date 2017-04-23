@@ -8,6 +8,7 @@ public class CraftShopControllNew : MonoBehaviour
 
 	[SerializeField] ItemCanCraft itemCanCraft;
 	[SerializeField] MainItemFocusToCraft focus;
+	[SerializeField] KindOfItemCraft[] kinds;
 	// Use this for initialization
 	void Start ()
 	{
@@ -27,5 +28,19 @@ public class CraftShopControllNew : MonoBehaviour
 	public void ShowItemIngredient (string itemID)
 	{
 		focus.item = itemID;
+	}
+
+	public bool MakeNewItem (string itemID)
+	{
+		foreach (KindOfItemCraft kind in kinds) {
+			if (itemID.StartsWith (kind.codeItem))
+			if (kind.itemCraftting.CompareTo ("") == 0) {
+				kind.itemCraftting = itemID;
+				return true;
+			} else
+				return false;
+		}
+
+		return false;
 	}
 }

@@ -5,11 +5,15 @@ using UnityEngine.UI;
 
 public class ItemSlotInCraft : MonoBehaviour
 {
+	public bool isEnoughtNumber = true;
+
 	[SerializeField]private string _itemString;
 	[SerializeField]private int _number;
 	[SerializeField]private Text txtName;
 	[SerializeField]private Text txtDescription;
 	[SerializeField]private Text txtNumber;
+
+	[SerializeField] bool isInForcus;
 
 	public Image icon;
 
@@ -17,6 +21,7 @@ public class ItemSlotInCraft : MonoBehaviour
 		set {
 			_itemString = value; 
 			if (_itemString == null || _itemString.CompareTo ("") == 0) {
+				isEnoughtNumber = true;
 				gameObject.SetActive (false);
 				return;
 			}
@@ -24,14 +29,30 @@ public class ItemSlotInCraft : MonoBehaviour
 			gameObject.SetActive (true);
 			SetIngredientItem ();
 		}
+		get{ return _itemString; }
 	}
 
 	public int number {
 		set {
 			_number = value;
 			if (txtNumber)
-				txtNumber.text = "x" + _number.ToString ();
+			if (isInForcus)
+				SetNumberOfItem ();
 		}
+
+		get{ return _number; }
+	}
+
+	void OnEnable ()
+	{
+		if (isInForcus)
+			Inventory.updateAction += SetNumberOfItem;
+	}
+
+	void OnDisable ()
+	{
+		if (isInForcus)
+			Inventory.updateAction -= SetNumberOfItem;
 	}
 
 	void SetIngredientItem ()
@@ -73,5 +94,19 @@ public class ItemSlotInCraft : MonoBehaviour
 	public void btn_ShowItemIngredient ()
 	{
 		CraftShopControllNew.craftShop.ShowItemIngredient (_itemString);
+	}
+
+	void SetNumberOfItem ()
+	{
+		int numberInInventory = 0;
+		if (Inventory.i.GetRawMaterialItem (_itemString) != null)
+			numberInInventory = Inventory.i.GetRawMaterialItem (_itemString).number;
+
+		if (isEnoughtNumber = numberInInventory >= _number)
+			txtNumber.color = Color.white;
+		else
+			txtNumber.color = Color.red;
+
+		txtNumber.text = numberInInventory.ToString () + "/" + _number.ToString ();
 	}
 }

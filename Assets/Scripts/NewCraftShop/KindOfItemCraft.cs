@@ -38,6 +38,8 @@ public class KindOfItemCraft : MonoBehaviour
 			timeCrafting = 5f;
 			allTimeCraft = 5f;
 		}
+
+		get{ return _itemCrafting; }
 	}
 
 	public bool isCrafting;
@@ -52,7 +54,7 @@ public class KindOfItemCraft : MonoBehaviour
 			return;
 
 		timeCrafting -= Time.deltaTime;
-
+		FillBar ();
 		if (timeCrafting <= 0)
 			CraftDone ();
 	}
@@ -76,7 +78,7 @@ public class KindOfItemCraft : MonoBehaviour
 
 	public void btn_GetItem ()
 	{
-		if (_itemCrafting.CompareTo ("") == 0 || (isDone && !isCrafting))
+		if (_itemCrafting.CompareTo ("") == 0 || !isDone)
 			return;
 
 		Debug.Log ("Add new item here");
@@ -89,24 +91,18 @@ public class KindOfItemCraft : MonoBehaviour
 			shopName = "Consumption";
 		else
 			shopName = "Update later";
+		
+		if (_itemCrafting.StartsWith (Ultility.RawMaterial))
+			Inventory.i.AddNewItem (new RawMaterialItem (LoadMaterials.data.GetRawMaterials (_itemCrafting), 1));
+		else if (_itemCrafting.StartsWith (Ultility.Consumption))
+			Inventory.i.AddNewItem (new ConsumptionItem (LoadConsumptions.data.GetConsumption (_itemCrafting)));
+		else if (_itemCrafting.StartsWith (Ultility.Equipment))
+			Inventory.i.AddNewItem (new Equipment (LoadEquipment.data.GetEquipment (_itemCrafting)));
 
 		itemCraftting = "";
 		isCrafting = false;
 		isDone = false;
 		nameItem.text = shopName;
-
 		icon.sprite = baseSprite;
-		if (_itemCrafting.StartsWith (Ultility.RawMaterial))
-			nameItem.text = "Raw Material";
-		else if (_itemCrafting.StartsWith (Ultility.Consumption))
-			nameItem.text = "Consumption";
-		else if (_itemCrafting.StartsWith (Ultility.Equipment))
-			nameItem.text = "Equipment";
-
-
-		//TODO: Add new item here
-		//		Inventory.i.AddNewItem()
 	}
-
-
 }

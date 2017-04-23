@@ -7,7 +7,6 @@ public class LoadForge : MonoBehaviour
 {
 	public static LoadForge data;
 
-	[SerializeField]private string _linkToMaterialSprite = "";
 	public List<Forge> forgeList;
 
 	public bool isLoadDone;
