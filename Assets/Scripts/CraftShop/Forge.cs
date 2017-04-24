@@ -14,6 +14,7 @@ public class Forge
 	public int numIngre3;
 	public string idIngre4;
 	public int numIngre4;
+	public bool isUnLock = false;
 
 	public Forge ()
 	{

@@ -8,6 +8,7 @@ public class BaseItem : BaseInformation
 	[SerializeField]protected int _goldDiffer;
 	[SerializeField]protected ItemType _type;
 	[SerializeField]protected ClassifyItem _classify;
+	[SerializeField] protected string descriptionOfInfo;
 
 	public int gold{ get { return _gold; } set { _gold = value; } }
 
@@ -16,4 +17,10 @@ public class BaseItem : BaseInformation
 	public ItemType type{ get { return _type; } set { _type = value; } }
 
 	public ClassifyItem classify{ get { return _classify; } set { _classify = value; } }
+
+	public BaseItem ()
+	{
+		
+	}
+
 }

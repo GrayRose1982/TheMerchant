@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MainItemFocusToCraft : MonoBehaviour
 {
-	public ItemSlotInCraft itemWantCraft;
-	public ItemSlotInCraft[] IngredientItems;
+	public ItemInCraftShop itemWantCraft;
+	public ItemInCraftShop[] IngredientItems;
 
 	public GameObject btnMakeItem;
 
@@ -46,7 +46,7 @@ public class MainItemFocusToCraft : MonoBehaviour
 		bool canCraft = CraftShopControllNew.craftShop.MakeNewItem (item);
 
 		if (canCraft)
-			foreach (ItemSlotInCraft i in IngredientItems) {
+			foreach (ItemInCraftShop i in IngredientItems) {
 				if (i.itemString != null && i.itemString.CompareTo ("") != 0)
 					Inventory.i.TakeItem (i.itemString, i.number);
 			}

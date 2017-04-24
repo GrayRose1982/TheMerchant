@@ -11,7 +11,7 @@ public class ItemCanCraft : MonoBehaviour
 	public Transform scroll;
 
 	public List<Forge> itemCanCraft;
-	public List<ItemSlotInCraft> showItem;
+	public List<ItemInCraftShop> showItem;
 
 	//	void OnEnable ()
 	//	{
@@ -29,7 +29,7 @@ public class ItemCanCraft : MonoBehaviour
 			if (i >= showItem.Count) {
 				GameObject g = Instantiate (baseIngredientObject, scroll) as GameObject;
 				g.transform.localScale = Vector3.one;
-				showItem.Add (g.GetComponent<ItemSlotInCraft> ());
+				showItem.Add (g.GetComponent<ItemInCraftShop> ());
 			}
 
 			showItem [i].gameObject.SetActive (true);

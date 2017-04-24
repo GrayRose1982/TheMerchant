@@ -14,7 +14,6 @@ public class CraftShopControllNew : MonoBehaviour
 	{
 		if (craftShop)
 			DestroyImmediate (gameObject);
-		
 		craftShop = this;
 	}
 
@@ -22,7 +21,6 @@ public class CraftShopControllNew : MonoBehaviour
 	{
 		LoadForge.data.GetItemCanCraft (ref itemCanCraft.itemCanCraft, codeItem);
 		itemCanCraft.ShowItemCanCraft ();
-//		itemCanCraft.gameObject.SetActive (true);
 	}
 
 	public void ShowItemIngredient (string itemID)

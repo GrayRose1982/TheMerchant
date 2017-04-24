@@ -10,6 +10,14 @@ public class ConsumptionItem : BaseItem
 
 	public int number;
 
+	public string information {
+		get {
+			string result = "";
+			result += "Heal: " + numberHealing + " Remove poison level: " + numberPoison;
+			return result;
+		}
+	}
+
 	public ConsumptionItem ()
 	{
 		

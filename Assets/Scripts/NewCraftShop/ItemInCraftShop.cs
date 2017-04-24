@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemSlotInCraft : MonoBehaviour
+public class ItemInCraftShop : MonoBehaviour
 {
 	public bool isEnoughtNumber = true;
 

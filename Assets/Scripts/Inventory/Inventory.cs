@@ -5,122 +5,205 @@ using System.Collections.ObjectModel;
 using System;
 
 [System.Serializable]
-public class Inventory:MonoBehaviour
+public class Inventory : MonoBehaviour
 {
-	public static Inventory i;
-	public static Action updateAction;
+    public static Inventory i;
+    public static Action updateAction;
 
-	[SerializeField]private List<RawMaterialItem> _raws;
-	[SerializeField]private List<ConsumptionItem> _consumptions;
-	[SerializeField]private List<ScrollItem> _scrolls;
-	[SerializeField]private List<Equipment> _equipments;
+    [SerializeField]
+    private List<RawMaterialItem> _raws;
+    [SerializeField]
+    private List<ConsumptionItem> _consumptions;
+    [SerializeField]
+    private List<ScrollItem> _scrolls;
+    [SerializeField]
+    private List<Equipment> _equipments;
 
-	public ReadOnlyCollection<RawMaterialItem> raws{ get { return _raws.AsReadOnly (); } }
+    public ReadOnlyCollection<RawMaterialItem> raws { get { return _raws.AsReadOnly(); } }
 
-	public ReadOnlyCollection<ConsumptionItem> consumptions{ get { return _consumptions.AsReadOnly (); } }
+    public ReadOnlyCollection<ConsumptionItem> consumptions { get { return _consumptions.AsReadOnly(); } }
 
-	public ReadOnlyCollection<ScrollItem> scrolls{ get { return _scrolls.AsReadOnly (); } }
+    public ReadOnlyCollection<ScrollItem> scrolls { get { return _scrolls.AsReadOnly(); } }
 
-	public ReadOnlyCollection<Equipment> equipments{ get { return _equipments.AsReadOnly (); } }
+    public ReadOnlyCollection<Equipment> equipments { get { return _equipments.AsReadOnly(); } }
+
+    void Start()
+    {
+        i = this;
+        _raws = new List<RawMaterialItem>();
+        _consumptions = new List<ConsumptionItem>();
+        _scrolls = new List<ScrollItem>();
+        _equipments = new List<Equipment>();
+
+        StartCoroutine(AddSomeItem());
+
+    }
+
+    #region Add item to inventory
+
+    public void AddNewItem(RawMaterialItem newItem)
+    {
+        int id = _raws.FindIndex(x => x.index.CompareTo(newItem.index) == 0);
+        if (id >= 0)
+            _raws[id].number += newItem.number;
+        else
+            _raws.Add(newItem);
+
+        if (updateAction != null)
+            updateAction.Invoke();
+    }
+
+    public void AddNewItem(ConsumptionItem newItem)
+    {
+        _consumptions.Add(newItem);
+
+        if (updateAction != null)
+            updateAction.Invoke();
+    }
+
+    public void AddNewItem(ScrollItem newItem)
+    {
+        _scrolls.Add(newItem);
+
+    }
+
+    public void AddNewItem(Equipment newItem)
+    {
+        _equipments.Add(newItem);
+    }
+
+    #endregion
+
+    #region Get Item
+
+    //	public BaseItem GetItem (string idItem)
+    //	{
+    //		if (idItem != null)
+    //		if (idItem.StartsWith (Ultility.RawMaterial))
+    //			return _raws.Find (x => x.index.CompareTo (idItem) == 0);
+    //		else if (idItem.StartsWith (Ultility.Consumption))
+    //			return _consumptions.Find (x => x.index.CompareTo (idItem) == 0);
+    //		else if (idItem.StartsWith (Ultility.Equipment))
+    //			return _equipments.Find (x => x.index.CompareTo (idItem) == 0);
+    ////		else if (idItem.StartsWith (Ultility.Scr))
+    ////			return _scrolls.Find (x => x.index.CompareTo (idItem) == 0);
+    //		else
+    //			return null;
+    //	}
+
+    public ShadowItem GetItem(string idItem)
+    {
+        if (idItem != null)
+            if (idItem.StartsWith(Ultility.RawMaterial))
+                return new ShadowItem(_raws.Find(x => x.index.CompareTo(idItem) == 0));
+            else if (idItem.StartsWith(Ultility.Consumption))
+                return new ShadowItem(_consumptions.Find(x => x.index.CompareTo(idItem) == 0));
+            else if (idItem.StartsWith(Ultility.Equipment))
+                return new ShadowItem(_equipments.Find(x => x.index.CompareTo(idItem) == 0));
 
 
-	void Start ()
-	{
-		i = this;
-		_raws = new List<RawMaterialItem> ();
-		_consumptions = new List<ConsumptionItem> ();
-		_scrolls = new List<ScrollItem> ();
-		_equipments = new List<Equipment> ();
+        return null;
+    }
 
-		StartCoroutine (AddSomeItem ());
-	}
+    public List<ShadowItem> GetAllItem()
+    {
+        List<ShadowItem> allShadownItems = new List<ShadowItem>();
+        for (int i = 0; i < _raws.Count; i++)
+            allShadownItems.Add(new ShadowItem(_raws[i]));
+        for (int i = 0; i < _consumptions.Count; i++)
+            allShadownItems.Add(new ShadowItem(_consumptions[i]));
+        for (int i = 0; i < _equipments.Count; i++)
+            allShadownItems.Add(new ShadowItem(_equipments[i]));
+        for (int i = 0; i < _scrolls.Count; i++)
+            allShadownItems.Add(new ShadowItem(_scrolls[i]));
 
-	public void AddNewItem (RawMaterialItem newItem)
-	{
-		int id = _raws.FindIndex (x => x.index.CompareTo (newItem.index) == 0);
-		if (id >= 0)
-			_raws [id].number += newItem.number;
-		else
-			_raws.Add (newItem);
-	
-		if (updateAction != null)
-			updateAction.Invoke ();
-	}
+        return allShadownItems;
+    }
 
-	public void AddNewItem (ConsumptionItem newItem)
-	{
-		_consumptions.Add (newItem);
+    public RawMaterialItem GetRawMaterialItem(string idItem)
+    {
+        if (idItem != null && idItem.StartsWith(Ultility.RawMaterial))
+        {
+            return _raws.Find(x => x.index.CompareTo(idItem) == 0);
+        }
+        else
+            return null;
+    }
 
-		if (updateAction != null)
-			updateAction.Invoke ();
-	}
+    public ConsumptionItem GetConsumptionItem(string idItem)
+    {
+        if (idItem != null && idItem.StartsWith(Ultility.Consumption))
+        {
+            return _consumptions.Find(x => x.index.CompareTo(idItem) == 0);
+        }
+        else
+            return null;
+    }
 
-	public void AddNewItem (ScrollItem newItem)
-	{
-		_scrolls.Add (newItem);
-	
-	}
+    public Equipment GetEquipmentItem(string idItem)
+    {
+        if (idItem != null && idItem.StartsWith(Ultility.Equipment))
+        {
+            return _equipments.Find(x => x.index.CompareTo(idItem) == 0);
+        }
+        else
+            return null;
+    }
 
-	public void AddNewItem (Equipment newItem)
-	{
-		_equipments.Add (newItem);
-	}
+    /// <summary>
+    /// Takes the item when craft, research and sell.
+    /// </summary>
+    public void TakeItem(string idItem, int number)
+    {
+        if (idItem.CompareTo("") == 0)
+            return;
 
-	public void GetItem ()
-	{
-		
-	}
+        if (idItem.StartsWith(Ultility.RawMaterial))
+        {
+            _raws.Find(x => x.index.CompareTo(idItem) == 0).number -= number;
+        }
+        else if (idItem.StartsWith(Ultility.Consumption))
+        {
+            _consumptions.Find(x => x.index.CompareTo(idItem) == 0).number -= number;
+        }
+        else if (idItem.StartsWith(Ultility.Equipment))
+        {
+            _equipments.Remove(_equipments.Find(x => x.index.CompareTo(idItem) == 0));
+        }
 
-	public RawMaterialItem GetRawMaterialItem (string index)
-	{
-		if (index != null && index.StartsWith (Ultility.RawMaterial)) {
-			return _raws.Find (x => x.index.CompareTo (index) == 0);
-		} else
-			return null;
-	}
+        if (updateAction != null)
+            updateAction.Invoke();
+    }
 
-	public ConsumptionItem GetConsumptionItem (string index)
-	{
-		if (index != null && index.StartsWith (Ultility.Consumption)) {
-			return _consumptions.Find (x => x.index.CompareTo (index) == 0);
-		} else
-			return null;
-	}
+    //	public Sprite GetSpriteItem (string idItem)
+    //	{
+    //		Sprite result;
+    //		if (idItem.StartsWith (Ultility.RawMaterial)) {
+    //			result = _raws.Find (x => x.index.CompareTo (idItem) == 0).icon;
+    //		} else if (idItem.StartsWith (Ultility.Consumption)) {
+    //			result = _raws.Find (x => x.index.CompareTo (idItem) == 0).icon;
+    //		} else if (idItem.StartsWith (Ultility.Consumption)) {
+    //			result = _raws.Find (x => x.index.CompareTo (idItem) == 0).icon;
+    //		}
+    //	}
 
-	public Equipment GetEquipmentItem (string index)
-	{
-		if (index != null && index.StartsWith (Ultility.Equipment)) {
-			return _equipments.Find (x => x.index.CompareTo (index) == 0);
-		} else
-			return null;
-	}
+    #endregion
 
-	public void TakeItem (string itemIndex, int number)
-	{
-		if (itemIndex.CompareTo ("") == 0)
-			return;
+    IEnumerator AddSomeItem()
+    {
+        while (!LoadMaterials.data || !LoadMaterials.data.isLoadDone)
+            yield return new WaitForSeconds(.5f);
 
-		if (itemIndex.StartsWith (Ultility.RawMaterial)) {
-			_raws.Find (x => x.index.CompareTo (itemIndex) == 0).number -= number;
-		} else if (itemIndex.StartsWith (Ultility.Consumption)) {
-			_raws.Find (x => x.index.CompareTo (itemIndex) == 0).number -= number;
-		}
-		
-		if (updateAction != null)
-			updateAction.Invoke ();
-	}
+        _raws.Add(new RawMaterialItem(LoadMaterials.data.GetRawMaterials("RM1"), 10));
+        _raws.Add(new RawMaterialItem(LoadMaterials.data.GetRawMaterials("RM2"), 10));
+        _raws.Add(new RawMaterialItem(LoadMaterials.data.GetRawMaterials("RM3"), 10));
+        _raws.Add(new RawMaterialItem(LoadMaterials.data.GetRawMaterials("RM9"), 4));
+        _raws.Add(new RawMaterialItem(LoadMaterials.data.GetRawMaterials("RM12"), 4));
+        _raws.Add(new RawMaterialItem(LoadMaterials.data.GetRawMaterials("RM13"), 4));
+        _raws.Add(new RawMaterialItem(LoadMaterials.data.GetRawMaterials("RM14"), 10));
 
-	IEnumerator AddSomeItem ()
-	{
-		while (!LoadMaterials.data || !LoadMaterials.data.isLoadDone)
-			yield return new WaitForSeconds (.5f);
-			
-		_raws.Add (new RawMaterialItem (LoadMaterials.data.GetRawMaterials ("RM1"), 10));
-		_raws.Add (new RawMaterialItem (LoadMaterials.data.GetRawMaterials ("RM2"), 10));
-		_raws.Add (new RawMaterialItem (LoadMaterials.data.GetRawMaterials ("RM3"), 10));
-		_raws.Add (new RawMaterialItem (LoadMaterials.data.GetRawMaterials ("RM9"), 4));
-		_raws.Add (new RawMaterialItem (LoadMaterials.data.GetRawMaterials ("RM12"), 4));
-		_raws.Add (new RawMaterialItem (LoadMaterials.data.GetRawMaterials ("RM13"), 4));
-		_raws.Add (new RawMaterialItem (LoadMaterials.data.GetRawMaterials ("RM14"), 10));
-	}
+
+        if (updateAction != null)
+            updateAction.Invoke();
+    }
 }

@@ -83,8 +83,12 @@ public class LoadForge : MonoBehaviour
 
 	public Forge GetForge (string itemID)
 	{
-		//Forge f = ;
-		return forgeList.Find (x => x.idItemCraft.CompareTo (itemID) == 0);
+		return forgeList.Find (x => (x.idItemCraft.CompareTo (itemID) == 0));
+	}
+
+	public void UnlockForge (string itemID)
+	{
+		forgeList.Find (x => x.idItemCraft.CompareTo (itemID) == 0).isUnLock = true;
 	}
 
 	public void GetItemCanCraft (ref List<Forge> result, string codeItem)
