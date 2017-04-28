@@ -63,14 +63,14 @@ public class BattleController : MonoBehaviour
 		List<BaseCharacter> monsters = new List<BaseCharacter> ();
 
 		foreach (CharacterHero h in heroFormation.heroes)
-			if (h.name.CompareTo ("") != 0 && h != null) {
+			if (h != null && h.name.CompareTo ("") != 0) {
 				h.baseTeam = 0;
 				characters.Add (h);
 				heroes.Add (h);
 			}
 
 		foreach (CharacterMonster m in monsterFormation.monsters)
-			if (m.name.CompareTo ("") != 0 && m != null) {
+			if (m != null && m.name.CompareTo ("") != 0) {
 				m.baseTeam = 1;
 				characters.Add (m);
 				monsters.Add (m);
@@ -89,8 +89,7 @@ public class BattleController : MonoBehaviour
 			int nextPlayer = GetNextCharacterMove (listTime);
 
 			SubTimeCount (listTime, nextPlayer, characters [nextPlayer].speedPerMove);
-			//BaseCharacter characterAttack = characters[nextPlayer];
-//			BaseCharacter characterDefence;
+		
 			while (defenceCharacter == null)
 				yield return new WaitForSeconds (.1f);
 
@@ -133,7 +132,7 @@ public class BattleController : MonoBehaviour
 			}
 
 		foreach (CharacterMonster m in monsterFormation.monsters)
-			if (m != null && m.name.CompareTo ("") != 0) {
+			if (m != null && m.name != null && m.name.CompareTo ("") != 0) {
 				Debug.Log ("New mosnter add to queue:" + m.name);
 				m.baseTeam = 1;
 				characters.Add (m);
@@ -151,11 +150,10 @@ public class BattleController : MonoBehaviour
 			Debug.Log ("Hero count:" + heroes.Count + " Monster count:" + monsters.Count + " Total:" + characters.Count);
 
 			int nextPlayer = GetNextCharacterMove (listTime);
-			Debug.Log ("Character select: " + nextPlayer);
+			Debug.Log ("Character select: " + nextPlayer + " name: " + characters [nextPlayer].name);
 			SubTimeCount (listTime, nextPlayer, characters [nextPlayer].speedPerMove);
-//			BaseCharacter characterAttack = characters [nextPlayer];
-//			BaseCharacter characterDefence;
 			attackCharacter = characters [nextPlayer];
+
 			if (heroes.IndexOf (attackCharacter) != -1)
 				;
 			else
@@ -172,6 +170,7 @@ public class BattleController : MonoBehaviour
 				heroes.Remove (defenceCharacter);
 			else
 				monsters.Remove (defenceCharacter);
+			
 			attackCharacter = null;
 			defenceCharacter = null;
 		}
@@ -267,11 +266,10 @@ public class BattleController : MonoBehaviour
 	{
 		int smallest = 0;
 
-		for (int i = 1; i < listSpeed.Count; i++) {
+		for (int i = 1; i < listSpeed.Count; i++)
 			if (listSpeed [i] < listSpeed [smallest])
 				smallest = i;
-		}
-
+		
 		return smallest;
 	}
 
@@ -295,10 +293,15 @@ public class BattleController : MonoBehaviour
 
 	void SubTimeCount (List<float> listSpeed, int positionReset, float valueGo)
 	{
+		float sub = listSpeed [positionReset];
+		string debug = "Time count down for turn:\n";
 		for (int i = 0; i < listSpeed.Count; i++) {
-			listSpeed [i] -= listSpeed [positionReset];
+			listSpeed [i] -= sub;
+			debug += "P" + i + ": " + listSpeed [i] + "\n";
 		}
 		listSpeed [positionReset] = valueGo;
+		debug += "P" + positionReset + ": " + listSpeed [positionReset];
+		Debug.Log (debug);
 	}
 
 	public void SelectDefenceCharacter (BaseCharacter c)

@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class BaseCharacter : BaseStar
 {
-	[SerializeField] protected int _health;
+	[SerializeField] protected int _health = 100;
 	public Sprite avatar;
 
 	public int manaShield;
@@ -26,7 +26,7 @@ public class BaseCharacter : BaseStar
 
 	public List<Skill> skills;
 
-    public List<Skill> skillUses;
+	public List<Skill> skillUses;
 
 	public LineInFormtaion line;
 	public int baseTeam = 0;
