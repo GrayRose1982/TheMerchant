@@ -22,21 +22,24 @@ public class InventoryUI : MonoBehaviour
     {
         List<ShadowItem> shadowItems = Inventory.i.GetAllItem();
         for (int i = 0; i < shadowItems.Count; i++)
-        {
-            slots[i].item = shadowItems[i];
-        }
+                slots[i].item = shadowItems[i];
+
+        if (shadowItems.Count < slots.Count)
+            for (int i = shadowItems.Count; i < slots.Count; i++)
+                slots[i].item = null;
     }
+
 
     public void AddItem(ShadowItem shadow)
     {
-        for (int i = 0; i < slots.Count; i++)
+        foreach (ItemSlotInInventory s in slots)
         {
-            if (slots[i].item.idItem.CompareTo(shadow.idItem) == 0)
-            {
-                slots[i].item.number += shadow.number;
-                slots[i].ChangeInformationByShadow();
-            }
+            if (shadow != null && s.item != null)
+                if (s.item.idItem.CompareTo(shadow.idItem) == 0)
+                {
+                    s.item.number += shadow.number;
+                    s.ChangeInformationByShadow();
+                }
         }
     }
-
 }

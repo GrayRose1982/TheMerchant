@@ -27,16 +27,13 @@ public class MainItemFocusToCraft : MonoBehaviour
 		f = LoadForge.data.GetForge (_item);
 		if (f == null)
 			return;
-		
-		IngredientItems [0].itemString = f.idIngre1;
-		IngredientItems [1].itemString = f.idIngre2;
-		IngredientItems [2].itemString = f.idIngre3;
-		IngredientItems [3].itemString = f.idIngre4;
 
-		IngredientItems [0].number = f.numIngre1;
-		IngredientItems [1].number = f.numIngre2;
-		IngredientItems [2].number = f.numIngre3;
-		IngredientItems [3].number = f.numIngre4;
+	    for (int i = 0; i < f.idIngres.Length; i++)
+	    {
+            IngredientItems[i].itemString = f.idIngres[i];
+            IngredientItems[i].number = f.numbers[i];
+	        
+	    }
 
 		SetButtonMakeItem ();
 	}

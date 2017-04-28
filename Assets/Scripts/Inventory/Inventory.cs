@@ -109,14 +109,18 @@ public class Inventory : MonoBehaviour
     {
         List<ShadowItem> allShadownItems = new List<ShadowItem>();
         for (int i = 0; i < _raws.Count; i++)
-            allShadownItems.Add(new ShadowItem(_raws[i]));
+            if (_raws[i].number > 0)
+                allShadownItems.Add(new ShadowItem(_raws[i]));
         for (int i = 0; i < _consumptions.Count; i++)
-            allShadownItems.Add(new ShadowItem(_consumptions[i]));
+            if (_consumptions[i].number > 0)
+                if (_consumptions[i].number > 0)
+                    allShadownItems.Add(new ShadowItem(_consumptions[i]));
+        for (int i = 0; i < _scrolls.Count; i++)
+
+                allShadownItems.Add(new ShadowItem(_scrolls[i]));
         for (int i = 0; i < _equipments.Count; i++)
             allShadownItems.Add(new ShadowItem(_equipments[i]));
-        for (int i = 0; i < _scrolls.Count; i++)
-            allShadownItems.Add(new ShadowItem(_scrolls[i]));
-
+       
         return allShadownItems;
     }
 
@@ -174,18 +178,6 @@ public class Inventory : MonoBehaviour
         if (updateAction != null)
             updateAction.Invoke();
     }
-
-    //	public Sprite GetSpriteItem (string idItem)
-    //	{
-    //		Sprite result;
-    //		if (idItem.StartsWith (Ultility.RawMaterial)) {
-    //			result = _raws.Find (x => x.index.CompareTo (idItem) == 0).icon;
-    //		} else if (idItem.StartsWith (Ultility.Consumption)) {
-    //			result = _raws.Find (x => x.index.CompareTo (idItem) == 0).icon;
-    //		} else if (idItem.StartsWith (Ultility.Consumption)) {
-    //			result = _raws.Find (x => x.index.CompareTo (idItem) == 0).icon;
-    //		}
-    //	}
 
     #endregion
 
