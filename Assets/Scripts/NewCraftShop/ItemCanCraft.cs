@@ -3,35 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ItemCanCraftPlace : MonoBehaviour
+public class ItemCanCraft : MonoBehaviour
 {
-	public static ItemCanCraftPlace itemCanCraftShop;
-
 	public GridLayoutGroup grid;
+	public float sizeGird;
 	public GameObject baseIngredientObject;
 	public Transform scroll;
 
 	public List<Forge> itemCanCraft;
-	public List<IngredientItem> showItem;
+	public List<ItemInCraftShop> showItem;
 
-	void OnEnable ()
-	{
-		ShowItemCanCraft ();
-		SetGrid ();
-	}
+	//	void OnEnable ()
+	//	{
+	//		ShowItemCanCraft ();
+	////		SetGrid ();
+	//	}
 
 	void Start ()
 	{
-		itemCanCraftShop = this;
 	}
 
-	void ShowItemCanCraft ()
+	public void ShowItemCanCraft ()
 	{
 		for (int i = 0; i < itemCanCraft.Count; i++) {
 			if (i >= showItem.Count) {
 				GameObject g = Instantiate (baseIngredientObject, scroll) as GameObject;
 				g.transform.localScale = Vector3.one;
-				showItem.Add (g.GetComponent<IngredientItem> ());
+				showItem.Add (g.GetComponent<ItemInCraftShop> ());
 			}
 
 			showItem [i].gameObject.SetActive (true);
@@ -45,17 +43,13 @@ public class ItemCanCraftPlace : MonoBehaviour
 			}
 	}
 
-	public void btn_ShowIngredient ()
-	{
-		CraftShopController.controller.TurnOnIngredientCV ();
-	}
-
 	void SetGrid ()
 	{
 		int child = scroll.childCount;
-		float sizeY = grid.padding.top + grid.padding.bottom + (child) * grid.cellSize.y + (child) * grid.spacing.y;
-		Vector2 size = new Vector2 (grid.cellSize.y, sizeY);
+		int number = grid.constraintCount;
+		int numberRow = child / number;
+		float sizeY = grid.padding.top + grid.padding.bottom + numberRow * grid.cellSize.y + numberRow * grid.spacing.y;
+		Vector2 size = new Vector2 (grid.cellSize.x, sizeY);
 		grid.GetComponent<RectTransform> ().sizeDelta = size;
-		//		sizeX = Screen.width;
 	}
 }

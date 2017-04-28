@@ -54,6 +54,7 @@ public class LoadEquipment : MonoBehaviour
 	{
 		Equipment equipment = new Equipment ();
 		equipment.index = Ultility.Equipment + equipments.Count.ToString ();
+		equipment.index = Ultility.Equipment + info.SelectSingleNode ("ID").InnerText;
 		equipment.name = info.SelectSingleNode ("Name").InnerText;
 		equipment.level = int.Parse (info.SelectSingleNode ("Level").InnerText);
 		equipment.gold = int.Parse (info.SelectSingleNode ("Gold").InnerText);

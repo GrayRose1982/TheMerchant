@@ -44,6 +44,8 @@ public class CharacterHero : BaseCharacter
 		eva = b.eva;
 		speed = b.speed;
 
+		icon = b.icon;
+		_health = b.health;
 		equipments = new Equipment[7];
 		avatar = b.avatar;
 		line = b.line;
@@ -65,6 +67,8 @@ public class CharacterHero : BaseCharacter
 		eva = h.eva;
 		speed = h.speed;
 
+		icon = h.icon;
+		_health = h.health;
 		_maxLevel = h.maxLevel;
 		_experience = h.experience;
 		_experienceLevelUp = h.experienceLevelUp;

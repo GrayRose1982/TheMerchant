@@ -7,8 +7,8 @@ public class IngredientItem : MonoBehaviour
 {
 	[SerializeField]private string _itemString;
 	[SerializeField]private int _number;
-	[SerializeField]private Text name;
-	[SerializeField]private Text description;
+	[SerializeField]private Text txtName;
+	[SerializeField]private Text txtDescription;
 	[SerializeField]private Text txtNumber;
 
 	public Image icon;
@@ -41,22 +41,22 @@ public class IngredientItem : MonoBehaviour
 				return;
 			
 			icon.sprite = r.icon;
-			name.text = r.name;
-			description.text = r.description;
+			txtName.text = r.name;
+			txtDescription.text = r.description;
 		} else if (_itemString.StartsWith (Ultility.Consumption)) {
 			ConsumptionItem c = LoadConsumptions.data.GetConsumption (_itemString);
 			if (c == null)
 				return;
 			icon.sprite = c.icon;
-			name.text = c.name;
-			description.text = c.description;
+			txtName.text = c.name;
+			txtDescription.text = c.description;
 		} else if (_itemString.StartsWith (Ultility.Equipment)) {
 			Equipment e = LoadEquipment.data.GetEquipment (_itemString);
 			if (e == null)
 				return;
 			icon.sprite = e.icon;
-			name.text = e.name;
-			description.text = e.description;
+			txtName.text = e.name;
+			txtDescription.text = e.description;
 		}
 	}
 
@@ -69,5 +69,4 @@ public class IngredientItem : MonoBehaviour
 	{
 		CraftShopController.controller.ingreCV.item = _itemString;
 	}
-
 }

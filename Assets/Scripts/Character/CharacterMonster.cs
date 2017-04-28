@@ -28,6 +28,8 @@ public class CharacterMonster : BaseCharacter
 		eva = b.eva;
 		speed = b.speed;
 
+		_health = b.health;
+		icon = b.icon;
 		line = b.line;
 		avatar = b.avatar;
 		baseTeam = b.baseTeam;
@@ -48,6 +50,8 @@ public class CharacterMonster : BaseCharacter
 		eva = m.eva;
 		speed = m.speed;
 
+		_health = m.health;
+		icon = m.icon;
 		expEarnWhenKill = m.expEarnWhenKill;
 		itemDrop = m.itemDrop;
 		avatar = m.avatar;
