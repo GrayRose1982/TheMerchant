@@ -18,10 +18,10 @@ public class DungeonController : MonoBehaviour
 		monsters = new List<CharacterMonster> ();
 		formations = new List<FormationForMonsters> ();
 		dungeon = this;
-		StartCoroutine (AddSomeHero ());
+		StartCoroutine (AddSomeMonster ());
 	}
 
-	IEnumerator AddSomeHero ()
+	IEnumerator AddSomeMonster ()
 	{
 		while (!LoadCharacter.data)
 			yield return new WaitForSeconds (.5f);

@@ -125,8 +125,7 @@ public class BattleController : MonoBehaviour
 		List<BaseCharacter> monsters = new List<BaseCharacter> ();
 
 		foreach (CharacterHero h in heroFormation.heroes)
-			if (h != null)
-			if (h.avatar != null) {
+			if (h != null && h.avatar != null) {
 				Debug.Log ("New hero add to queue:" + h.name);
 				h.baseTeam = 0;
 				characters.Add (h);
