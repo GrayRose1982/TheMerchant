@@ -7,14 +7,12 @@ public class DungeonController : MonoBehaviour
 {
 	public static DungeonController dungeon;
 
-	public FormationBattleMonsters mons;
-	public List<CharacterMonster> monsters;
-
+	public List<List<CharacterMonster>> dungeonMonsters;
 	//	public MonsterBattle[] monsterInformation;
 
 	void Start ()
 	{
-		monsters = new List<CharacterMonster> ();
+		dungeonMonsters = new List<List<CharacterMonster>> ();
 		dungeon = this;
 		StartCoroutine (AddSomeMonster ());
 	}
@@ -27,26 +25,31 @@ public class DungeonController : MonoBehaviour
 		while (!LoadCharacter.data.isLoadHeroDone)
 			yield return new WaitForSeconds (.5f);
 
-		monsters.Add (new CharacterMonster (LoadCharacter.data.monsters [0]));
-		monsters.Add (new CharacterMonster (LoadCharacter.data.monsters [0]));
-		monsters.Add (new CharacterMonster (LoadCharacter.data.monsters [0]));
-		monsters.Add (new CharacterMonster (LoadCharacter.data.monsters [0]));
-		monsters.Add (new CharacterMonster (LoadCharacter.data.monsters [1]));
-		monsters.Add (new CharacterMonster (LoadCharacter.data.monsters [2]));
-		monsters.Add (new CharacterMonster (LoadCharacter.data.monsters [3]));
+		List<CharacterMonster> turnOne = new List<CharacterMonster> ();
+		turnOne.Add (new CharacterMonster (LoadCharacter.data.monsters [0]));
+		turnOne.Add (new CharacterMonster (LoadCharacter.data.monsters [0]));
+		turnOne.Add (new CharacterMonster (LoadCharacter.data.monsters [0]));
+		turnOne.Add (new CharacterMonster (LoadCharacter.data.monsters [0]));
+		turnOne.Add (new CharacterMonster (LoadCharacter.data.monsters [1]));
+		turnOne.Add (new CharacterMonster (LoadCharacter.data.monsters [2]));
+		turnOne.Add (new CharacterMonster (LoadCharacter.data.monsters [3]));
+		dungeonMonsters.Add (turnOne);
 
-		SetForamtion ();
+
+		List<CharacterMonster> turnTwo = new List<CharacterMonster> ();
+		turnTwo.Add (new CharacterMonster (LoadCharacter.data.monsters [2]));
+		turnTwo.Add (new CharacterMonster (LoadCharacter.data.monsters [2]));
+		turnTwo.Add (new CharacterMonster (LoadCharacter.data.monsters [2]));
+		turnTwo.Add (new CharacterMonster (LoadCharacter.data.monsters [2]));
+		turnTwo.Add (new CharacterMonster (LoadCharacter.data.monsters [2]));
+		turnTwo.Add (new CharacterMonster (LoadCharacter.data.monsters [2]));
+		turnTwo.Add (new CharacterMonster (LoadCharacter.data.monsters [3]));
+		dungeonMonsters.Add (turnTwo);
 	}
 
-	void SetForamtion ()
+	public void btn_GoToDungeon (int numberDung)
 	{
-//		FormationForMonsters formation = new FormationForMonsters ();
-//		formation.AddCharacter (monsters [0], 0, LineInFormtaion.Front);
-//		formation.AddCharacter (monsters [1], 1, LineInFormtaion.Front);
-//		formation.AddCharacter (monsters [2], 2, LineInFormtaion.Front);
-//		formation.AddCharacter (monsters [3], 3, LineInFormtaion.Front);
-//		formation.AddCharacter (monsters [4], 4, LineInFormtaion.Front);
-//
-//		formations.Add (formation);
+		BattleController.c.SetMonsterFormation (dungeonMonsters [numberDung]);
+		BattleController.c.StartBattle ();
 	}
 }

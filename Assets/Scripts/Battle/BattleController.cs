@@ -11,6 +11,7 @@ public class BattleController : MonoBehaviour
 
 	private BaseCharacter defenceCharacter;
 	private BaseCharacter attackCharacter;
+	public bool isDoneTurn;
 
 	public List<CharacterHero> hf;
 	public List<CharacterMonster> mf;
@@ -24,7 +25,12 @@ public class BattleController : MonoBehaviour
 	{
 		c = this;
 
-		StartCoroutine (DemoBattle ());
+//		StartCoroutine (DemoBattle ());
+	}
+
+	public void StartBattle ()
+	{
+		StartCoroutine (BattleBetweenMonsteresAndHeroes (hf, mf));
 	}
 
 	/// <summary>
@@ -48,7 +54,7 @@ public class BattleController : MonoBehaviour
 
 		while (mf.Count == 0) {
 			if (DungeonController.dungeon) {
-				mf = DungeonController.dungeon.monsters;
+				mf = DungeonController.dungeon.dungeonMonsters [0];
 				uiBattleMonster.SetFormation (mf);
 			}
 			yield return new WaitForSeconds (1f);
@@ -56,6 +62,22 @@ public class BattleController : MonoBehaviour
 
 		StartCoroutine (BattleBetweenMonsteresAndHeroes (hf, mf));
 	}
+
+	#region Set team
+
+	public void SetMonsterFormation (List<CharacterMonster> mons)
+	{
+		mf = mons;
+		uiBattleMonster.SetFormation (mf);
+	}
+
+	public void SetHeroForamtion (List<CharacterHero> heroes)
+	{
+		hf = heroes;
+		uiBattleHero.SetFormation (hf);
+	}
+
+	#endregion
 
 	#region Battle with in formation
 
@@ -122,7 +144,9 @@ public class BattleController : MonoBehaviour
 
 			if (heroes.IndexOf (attackCharacter) == -1)
 				defenceCharacter = heroes [GetLowestHeathCharacter (heroes)];
-
+			else
+				isDoneTurn = false;
+			
 			while (defenceCharacter == null)
 				yield return new WaitForSeconds (.1f);
 			Debug.Log ("Attacker:" + attackCharacter.name + " Get defence:" + defenceCharacter.name);
@@ -154,10 +178,18 @@ public class BattleController : MonoBehaviour
 				} else
 					uiBattleMonster.SetNewMonster (null, posision);
 			}
-			
+
+			//TODO: Wait animation when monster attack
+//			if (heroes.Contains (defenceCharacter))
+//				while (!isDoneTurn)
+//					yield return new WaitForSeconds (1f);
+
+			isDoneTurn = true;
 			attackCharacter = null;
 			defenceCharacter = null;
 		}
+
+		Debug.Log ("War done");
 	}
 
 	#endregion

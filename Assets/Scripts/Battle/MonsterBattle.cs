@@ -13,8 +13,11 @@ public class MonsterBattle : MonoBehaviour
 	public CharacterMonster mons {
 		get { return _mons; }
 		set {
-			_mons.takeDamageAction -= TakeDamage;
-			_mons.takeDamageAction -= UIDamageTaken;
+			if (_mons != null) {
+				_mons.takeDamageAction -= TakeDamage;
+				_mons.takeDamageAction -= UIDamageTaken;
+			}
+
 			_mons = value;
 
 			if (value == null) {

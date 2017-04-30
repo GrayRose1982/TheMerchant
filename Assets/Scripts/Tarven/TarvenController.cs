@@ -33,6 +33,6 @@ public class TarvenController : MonoBehaviour
 
 	void SetForamtion ()
 	{
-
+		BattleController.c.SetHeroForamtion (heroes);
 	}
 }
