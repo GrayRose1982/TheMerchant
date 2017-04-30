@@ -5,25 +5,19 @@ using UnityEngine.UI;
 
 public class FormationBattleHero : MonoBehaviour
 {
-	[SerializeField] FormationForHeroes formation;
+	public HeroBattle[] heroUI;
 
-	public HeroBattle[] heroes;
-
-	void Start ()
+	public void SetFormation (List<CharacterHero> newFormation)
 	{
-		
-	}
+		for (int i = 0; i < newFormation.Count; i++) {
+			if (i >= heroUI.Length)
+				break;
 
-	public void SetFormation (FormationForHeroes newFormation)
-	{
-		formation = newFormation;
-
-		for (int i = 0; i < formation.heroes.Length; i++) {
-			if (formation.heroes [i] != null) {
-				heroes [i].gameObject.SetActive (true);
-				heroes [i].hero = formation.heroes [i];
-			} else if (i < heroes.Length) {
-				heroes [i].gameObject.SetActive (false);
+			if (newFormation [i] != null) {
+				heroUI [i].gameObject.SetActive (true);
+				heroUI [i].hero = newFormation [i];
+			} else if (i < heroUI.Length) {
+				heroUI [i].gameObject.SetActive (false);
 			}
 		}
 	}

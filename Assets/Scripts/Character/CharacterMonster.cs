@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterMonster : BaseCharacter
 {
 	public int expEarnWhenKill = 10;
-
+	public bool isFighting = false;
 	//TODO: item drop when kill;
 	public int itemDrop;
 

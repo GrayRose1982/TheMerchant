@@ -9,14 +9,12 @@ public class DungeonController : MonoBehaviour
 
 	public FormationBattleMonsters mons;
 	public List<CharacterMonster> monsters;
-	public List<FormationForMonsters> formations;
 
 	//	public MonsterBattle[] monsterInformation;
 
 	void Start ()
 	{
 		monsters = new List<CharacterMonster> ();
-		formations = new List<FormationForMonsters> ();
 		dungeon = this;
 		StartCoroutine (AddSomeMonster ());
 	}
@@ -34,26 +32,21 @@ public class DungeonController : MonoBehaviour
 		monsters.Add (new CharacterMonster (LoadCharacter.data.monsters [0]));
 		monsters.Add (new CharacterMonster (LoadCharacter.data.monsters [0]));
 		monsters.Add (new CharacterMonster (LoadCharacter.data.monsters [1]));
+		monsters.Add (new CharacterMonster (LoadCharacter.data.monsters [2]));
+		monsters.Add (new CharacterMonster (LoadCharacter.data.monsters [3]));
 
 		SetForamtion ();
 	}
 
 	void SetForamtion ()
 	{
-		FormationForMonsters formation = new FormationForMonsters ();
-		formation.AddCharacter (monsters [0], 0, LineInFormtaion.Front);
-		formation.AddCharacter (monsters [1], 1, LineInFormtaion.Front);
-		formation.AddCharacter (monsters [2], 2, LineInFormtaion.Front);
-		formation.AddCharacter (monsters [3], 3, LineInFormtaion.Front);
-		formation.AddCharacter (monsters [4], 4, LineInFormtaion.Front);
-//		formation.AddCharacter (monsters [5], 5, LineInFormtaion.Front);
-
-		formations.Add (formation);
-		SetUIFormation ();
-	}
-
-	void SetUIFormation ()
-	{
-		mons.SetFormation (formations [0]);
+//		FormationForMonsters formation = new FormationForMonsters ();
+//		formation.AddCharacter (monsters [0], 0, LineInFormtaion.Front);
+//		formation.AddCharacter (monsters [1], 1, LineInFormtaion.Front);
+//		formation.AddCharacter (monsters [2], 2, LineInFormtaion.Front);
+//		formation.AddCharacter (monsters [3], 3, LineInFormtaion.Front);
+//		formation.AddCharacter (monsters [4], 4, LineInFormtaion.Front);
+//
+//		formations.Add (formation);
 	}
 }

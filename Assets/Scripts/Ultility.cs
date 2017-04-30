@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Ultility: MonoBehaviour
 {
+	public static Ultility u;
 	public static string CharacterHero = "CH";
 	public static string CharacterMonster = "CM";
 	public static string RawMaterial = "RM";
 	public static string Consumption = "CO";
 	public static string Equipment = "E";
+
+	public Sprite noneSprite;
 
 	public static Sprite done;
 	public static Sprite wait;
@@ -16,6 +19,7 @@ public class Ultility: MonoBehaviour
 
 	void Start ()
 	{
-		
+		if (!u)
+			u = this;
 	}
 }

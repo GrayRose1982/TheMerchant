@@ -101,7 +101,6 @@ public class Inventory : MonoBehaviour
 		else if (idItem.StartsWith (Ultility.Equipment))
 			return new ShadowItem (_equipments.Find (x => x.index.CompareTo (idItem) == 0));
 
-
 		return null;
 	}
 

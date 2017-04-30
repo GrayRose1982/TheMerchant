@@ -5,26 +5,28 @@ using UnityEngine.UI;
 
 public class FormationBattleMonsters : MonoBehaviour
 {
-	[SerializeField] FormationForMonsters formation;
+	public MonsterBattle[] monsterUI;
 
-	public MonsterBattle[] monster;
-
-	void Start ()
+	public void SetFormation (List<CharacterMonster> newFormation)
 	{
+		for (int i = 0; i < newFormation.Count; i++) {
+			if (i >= monsterUI.Length)
+				break;
 
-	}
-
-	public void SetFormation (FormationForMonsters newFormation)
-	{
-		formation = newFormation;
-
-		for (int i = 0; i < formation.monsters.Length; i++) {
-			if (formation.monsters [i] != null) {
-				monster [i].gameObject.SetActive (true);
-				monster [i].mons = formation.monsters [i];
-			} else if (i < monster.Length) {
-				monster [i].gameObject.SetActive (false);
+			if (newFormation [i] != null) {
+				monsterUI [i].gameObject.SetActive (true);
+				monsterUI [i].mons = newFormation [i];
+			} else if (i < monsterUI.Length) {
+				monsterUI [i].gameObject.SetActive (false);
 			}
 		}
+	}
+
+	public void SetNewMonster (CharacterMonster mons, int position)
+	{
+		monsterUI [position].gameObject.SetActive (true);
+		if (mons != null)
+			mons.posisionInTeam = position;
+		monsterUI [position].mons = mons;
 	}
 }
