@@ -12,10 +12,9 @@ public class Ultility: MonoBehaviour
 	public static string Equipment = "E";
 
 	public Sprite noneSprite;
-
-	public static Sprite done;
-	public static Sprite wait;
-	public static Sprite getJob;
+	public Sprite done;
+	public Sprite wait;
+	public Sprite getJob;
 
 	void Start ()
 	{
