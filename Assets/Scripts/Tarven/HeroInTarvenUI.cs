@@ -7,6 +7,7 @@ public class HeroInTarvenUI : MonoBehaviour
 
 	public Text txtName;
 	public Text txtProgress;
+	public Image imgMainHeroIcon;
 	public Image imgBarFill;
 	public Image imgJob;
 
@@ -20,7 +21,7 @@ public class HeroInTarvenUI : MonoBehaviour
 	public float baseTimeWorking {
 		set {
 			_baseTimeWorking = value;
-			timeWorking = value;
+			timeWorking = 0;
 			working = true;
 		}
 	}
@@ -29,5 +30,18 @@ public class HeroInTarvenUI : MonoBehaviour
 
 	void Update ()
 	{
+		if (!working)
+			return;
+
+		timeWorking += Time.deltaTime;
+		imgBarFill.fillAmount = timeWorking / _baseTimeWorking;
+		Debug.Log (imgBarFill.fillAmount + " " + timeWorking / _baseTimeWorking);
 	}
+
+	public void btn_watchWhatCanDo ()
+	{
+		if (working)
+			return;
+	}
+
 }
