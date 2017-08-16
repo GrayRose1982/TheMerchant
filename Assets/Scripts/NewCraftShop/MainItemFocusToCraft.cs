@@ -28,27 +28,22 @@ public class MainItemFocusToCraft : MonoBehaviour
 		if (f == null)
 			return;
 
-	    for (int i = 0; i < f.idIngres.Length; i++)
-	    {
-            IngredientItems[i].itemString = f.idIngres[i];
-            IngredientItems[i].number = f.numbers[i];
-	        
-	    }
+		for (int i = 0; i < f.idIngres.Length; i++) {
+			IngredientItems [i].itemString = f.idIngres [i];
+			IngredientItems [i].number = f.numbers [i];
+		}
 
 		SetButtonMakeItem ();
 	}
 
 	public void btn_MakeItem ()
 	{
-		bool canCraft = CraftShopControllNew.craftShop.MakeNewItem (item);
+		foreach (ItemInCraftShop i in IngredientItems)
+			if (i.itemString != null && i.itemString.CompareTo ("") != 0)
+				Inventory.i.TakeItem (i.itemString, i.number);
 
-		if (canCraft)
-			foreach (ItemInCraftShop i in IngredientItems) {
-				if (i.itemString != null && i.itemString.CompareTo ("") != 0)
-					Inventory.i.TakeItem (i.itemString, i.number);
-			}
-
-		SetButtonMakeItem ();
+		//	SetButtonMakeItem ();
+		CraftShopControllNew.craftShop.btn_ShowItemCanCraft (_item);
 	}
 
 	void SetButtonMakeItem ()

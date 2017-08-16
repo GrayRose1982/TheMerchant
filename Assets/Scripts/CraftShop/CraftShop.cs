@@ -11,7 +11,6 @@ public class CraftShop : MonoBehaviour
 	public Image icon;
 	public Text nameItem;
 	public Transform fillBar;
-
 	[SerializeField]private Sprite baseSprite;
 
 	public string itemCraftting {
@@ -42,7 +41,6 @@ public class CraftShop : MonoBehaviour
 
 	public bool isCrafting;
 	public bool isDone;
-	public ItemCanCraftPlace itemCanCraft;
 	public float timeCrafting = 5f;
 	public float allTimeCraft = 5f;
 
@@ -57,12 +55,6 @@ public class CraftShop : MonoBehaviour
 
 		if (timeCrafting <= 0)
 			CraftDone ();
-	}
-
-	public void btn_ShowItemCanCraf ()
-	{
-		LoadForge.data.GetItemCanCraft (ref itemCanCraft.itemCanCraft, codeItem);
-		itemCanCraft.gameObject.SetActive (true);
 	}
 
 	public void btn_GetItem ()
@@ -93,7 +85,6 @@ public class CraftShop : MonoBehaviour
 			nameItem.text = "Consumption";
 		else if (_itemCrafting.StartsWith (Ultility.Equipment))
 			nameItem.text = "Equipment";
-		
 
 		//TODO: Add new item here
 //		Inventory.i.AddNewItem()
@@ -102,6 +93,11 @@ public class CraftShop : MonoBehaviour
 	void CraftDone ()
 	{
 		isDone = true;
-		isCrafting = false;
+		isCrafting = false; 
+	}
+
+	public void btn_SetCraftUse ()
+	{
+		CraftShopControllNew.craftShop.csUse = this;
 	}
 }

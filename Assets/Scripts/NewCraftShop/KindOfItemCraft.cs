@@ -44,7 +44,6 @@ public class KindOfItemCraft : MonoBehaviour
 
 	public bool isCrafting;
 	public bool isDone;
-	public ItemCanCraftPlace itemCanCraft;
 	public float timeCrafting = 5f;
 	public float allTimeCraft = 5f;
 

@@ -33,8 +33,4 @@ public class IngredientCV : MonoBehaviour
 		IngredientItems [3].number = f.numIngre4;
 	}
 
-	public void btn_MakeItem ()
-	{
-		CraftShopController.controller.GetCraftItem (_item);
-	}
 }

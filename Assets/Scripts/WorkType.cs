@@ -69,3 +69,12 @@ public enum SkillEffect
 	DealPhysicDamage = 98,
 	DealMagicDamage = 99,
 }
+
+public enum WorkType
+{
+	None = 0,
+	Craft = 1,
+	Quest = 2,
+	Selling = 3,
+	Dungeon = 4,
+}

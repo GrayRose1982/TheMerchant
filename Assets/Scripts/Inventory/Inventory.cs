@@ -153,6 +153,8 @@ public class Inventory : MonoBehaviour
 	{
 		if (idItem.CompareTo ("") == 0)
 			return;
+		else
+			Debug.Log ("Take item " + idItem + " with number " + number);
 
 		if (idItem.StartsWith (Ultility.RawMaterial)) {
 			_raws.Find (x => x.index.CompareTo (idItem) == 0).number -= number;
@@ -164,6 +166,41 @@ public class Inventory : MonoBehaviour
 
 		if (updateAction != null)
 			updateAction.Invoke ();
+	}
+
+	/// <summary>
+	/// Check item for is enough to get
+	/// </summary>
+	public bool IsEnoughItem (string idItem, int number)
+	{
+		bool isEnough = false;
+		if (idItem.CompareTo ("") == 0)
+			return isEnough;
+		else
+			Debug.Log ("Check item " + idItem + " with number " + number);
+
+		if (idItem.StartsWith (Ultility.RawMaterial)) {
+			isEnough = _raws.Find (x => x.index.CompareTo (idItem) == 0).number <= number;
+		} else if (idItem.StartsWith (Ultility.Consumption)) {
+			isEnough = _consumptions.Find (x => x.index.CompareTo (idItem) == 0).number <= number;
+		} else if (idItem.StartsWith (Ultility.Equipment)) {
+			isEnough = _equipments.Exists (x => x.index.CompareTo (idItem) == 0);
+		}
+
+		return isEnough;
+	}
+
+	public bool IsEnoughItems (string[] idItems, int[] numberItems)
+	{
+		bool isEnough = false;
+		
+		for (int i = 0; i < idItems.Length; i++)
+			if (i < numberItems.Length)
+				isEnough &= IsEnoughItem (idItems [i], numberItems [i]);
+			else
+				isEnough = false;
+
+		return isEnough;
 	}
 
 	#endregion

@@ -62,11 +62,9 @@ public class IngredientItem : MonoBehaviour
 
 	public void btn_ShowIngredient ()
 	{
-		CraftShopController.controller.TurnOnIngredientCV ();
 	}
 
 	public void btn_SendItemCraft ()
 	{
-		CraftShopController.controller.ingreCV.item = _itemString;
 	}
 }

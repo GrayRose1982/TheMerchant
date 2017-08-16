@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class BaseInformation
 {
-	private string _index;
+	[SerializeField]private string _index;
 
 	public string index{ get { return _index; } set { _index = value; } }
 

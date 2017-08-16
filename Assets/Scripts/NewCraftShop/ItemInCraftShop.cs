@@ -36,7 +36,7 @@ public class ItemInCraftShop : MonoBehaviour
 		set {
 			_number = value;
 			if (txtNumber)
-			if (isInForcus)
+			if (!isInForcus)
 				SetNumberOfItem ();
 		}
 
